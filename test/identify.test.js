@@ -157,7 +157,7 @@ test("identifies two pairs", () => {
     })
 })
 
-test("identifies Three of a Kind", () => {
+test("identifies three of a kind", () => {
     const handThreeOfAKind = {
         "cards": [
             {
@@ -200,5 +200,43 @@ test("identifies Three of a Kind", () => {
         ],
         "name": "Three of a Kind",
         "rank": 3
+    })
+})
+
+test("identifies straight", () => {
+    const handStraight = {
+        "cards": [
+            {
+                "valueIndex": 7,
+                "suiteIndex": 2
+            },
+            {
+                "valueIndex": 6,
+                "suiteIndex": 1
+            },
+            {
+                "valueIndex": 5,
+                "suiteIndex": 0
+            },
+            {
+                "valueIndex": 4,
+                "suiteIndex": 1
+            },
+            {
+                "valueIndex": 3,
+                "suiteIndex": 1
+            }
+        ]
+    }
+
+    expect(identify.getScore(handStraight)).toStrictEqual({
+        "card": [
+            {
+                "suiteIndex": 2,
+                "valueIndex": 7
+            }
+        ],
+        "name": "Straight",
+        "rank": 4
     })
 })

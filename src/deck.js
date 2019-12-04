@@ -43,7 +43,7 @@ exports.new = function () {
         },
 
         shuffle: function () {
-            for (let i = 0; i < 10000; i++) {
+            for (let i = 0; i < 1000; i++) {
                 const a = Math.floor(Math.random() * 52)
                 let b = a
                 while (b === a) {

@@ -17,16 +17,24 @@ function deal(deck) {
 }
 
 let done = false
-let count=0;
+let count = 0
+let results = {}
 while (!done) {
     const deck = Deck.new()
     const hands = deal(deck.shuffle())
 
     hands.forEach(hand => {
-        count++
-        if (identify.getScore(hand).name === "Two Pair") {
+        if (count++ > 1000) {
             done = true
-            console.log(count, hand.toString(), identify.getScore(hand).name)
+        } else {
+            const name = identify.getScore(hand).name
+            if (results.hasOwnProperty(name)) {
+                results[name]++
+            } else {
+                results[name] = 0
+            }
         }
     })
 }
+
+console.log(JSON.stringify(results, null, 4))

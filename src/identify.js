@@ -7,6 +7,7 @@ exports.new = function () {
         one_pair: {name: "One Pair", rank: 1, card: null},
         two_pair: {name: "Two Pair", rank: 2, card: null},
         three_of_a_kind: {name: "Three of a Kind", rank: 3, card: null},
+        straight: {name: "Straight", rank: 4, card: null},
     }
 
     const _isHighCard = function () {
@@ -78,7 +79,6 @@ exports.new = function () {
         return []
     }
 
-
     const _isThreeOfAKind = function (cards) {
         for (let i = 0; i < 5; i++) {
             for (let j = i + 1; j < 5; j++) {
@@ -107,10 +107,48 @@ exports.new = function () {
         return []
     }
 
+    const _isStraight = function (cards) {
+        let differentSuites = false
+        let inOrder = true
+        for (let i = 0; i < 4; i++) {
+            if (cards[i].suiteIndex !== cards[i + 1].suiteIndex) {
+                differentSuites = true
+            }
+        }
+        if (differentSuites) {
+            for (let i = 4; i > 0; i--) {
+                if (cards[i].valueIndex !== cards[i - 1].valueIndex - 1) {
+                    inOrder = false
+                }
+            }
+        }
+        return inOrder
+    }
+
+    const _getStraight = function(cards) {
+        return [cards[0]]
+    }
+
     return {
+
+        /**
+         * Five of a kind
+         * Straight flush
+         * Four of a Kind
+         * Full House
+         * Flush
+         * @param hand
+         * @returns {scores.high_card|{name, rank, card}|scores.one_pair|{name, rank, card}|scores.three_of_a_kind|{name, rank, card}|scores.straight|{name, rank, card}|scores.two_pair|{name, rank, card}}
+         */
         getScore: function (hand) {
 
             let score
+
+            if (_isStraight(hand.cards)) {
+                score = scores.straight
+                score.card = _getStraight(hand.cards)
+                return score
+            }
 
             if (_isThreeOfAKind(hand.cards)) {
                 score = scores.three_of_a_kind
