@@ -24,7 +24,7 @@ while (!done) {
     const hands = deal(deck.shuffle())
 
     hands.forEach(hand => {
-        if (count++ > 1000) {
+        if (count++ > 100000) {
             done = true
         } else {
             const name = identify.getScore(hand).name
